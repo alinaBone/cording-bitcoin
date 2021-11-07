@@ -16,14 +16,14 @@ krw_tickers = pyupbit.get_tickers(fiat = "KRW")
 # 그래서 이렇게 타임 모듈을 사용해 0.1초 정도 쉬는 구간을 만들어 줘야 합니다.
 # 이런말이 있죠 모르면 외워
 time.sleep(0.1)
-
+print(krw_tickers)
 target_tickers = [] # 자신이 원하는 티커들을 담을 리스트
 
 #원화 티커들을 for문을 통해 하나씩 가져옵니다 
 for i in krw_tickers: 
 
     # 가져온 티커의 현재가를 구합니다.
-    df = pyupbit.get_ohlcv(i,count=15)
+    df = pyupbit.get_ohlcv(i,count=100)
 
     w = 15  # 기준 이동평균일
     k = 3  # 기준 상수
@@ -43,7 +43,7 @@ for i in krw_tickers:
 
     # 티커의 현재가격이 1000초과 5000미만이면
     # if df["low"][-1] < df["lbb"][-1]:
-    if df["lbb"][-1] > df["low"][-1]:
+    if df["ubb"][-3] < df["high"][-3]:
 
         #해당티커를 자신이 만든 리스트에 저장합니다.
         target_tickers.append(i)
